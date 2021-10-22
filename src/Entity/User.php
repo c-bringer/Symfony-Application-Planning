@@ -7,10 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+//@ORM\Entity(repositoryClass=UserRepository::class)
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity()
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"intervenant" = "Intervenant", "secretaire" = "Secretaire"})
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id

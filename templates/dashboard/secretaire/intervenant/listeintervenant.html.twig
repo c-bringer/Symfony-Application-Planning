@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Liste des intervenants</h1>
+
+        <table class="table pt-2">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Spécialité</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for intervenant in intervenants %}
+                    <tr>
+                        <td>{{ intervenant.nom }}</td>
+                        <td>{{ intervenant.prenom }}</td>
+                        <td>{{ intervenant.specialite }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

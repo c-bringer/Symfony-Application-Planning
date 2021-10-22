@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Liste des matières</h1>
+
+        <table class="table pt-2">
+            <thead>
+            <tr>
+                <th scope="col">Libelle</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for matiere in matieres %}
+                <tr>
+                    <td>{{ matiere.libelle }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

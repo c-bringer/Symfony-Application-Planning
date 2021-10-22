@@ -10,9 +10,20 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        # app_user_provider:
+            # entity:
+                # class: App\Entity\User
+                # property: email
+        chain_provider:
+            chain:
+                providers: [app_intervenant_provider, app_secretaire_provider]
+        app_intervenant_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\Intervenant
+                property: email
+        app_secretaire_provider:
+            entity:
+                class: App\Entity\Secretaire
                 property: email
     firewalls:
         dev:
@@ -20,7 +31,8 @@ security:
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            # provider: app_user_provider
+            provider: chain_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
@@ -36,7 +48,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/intervenant, roles: ROLE_USER }
-        - { path: ^/secretaire, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/secretaire, roles: ROLE_USER }
+        # - { path: ^/secretaire, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

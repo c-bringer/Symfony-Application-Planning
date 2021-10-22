@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 class FrontController extends AbstractController
 {
@@ -14,9 +13,9 @@ class FrontController extends AbstractController
         return $this->render("index.html.twig");
     }
 
-    #[Route("/login-success", name: "login_success")]
-    public function redirectAfterLoginSuccess()
+    #[Route("/dashboard", name: "dashboard")]
+    public function redirectToDashboard()
     {
-
+        return $this->render("dashboard/index.html.twig");
     }
 }

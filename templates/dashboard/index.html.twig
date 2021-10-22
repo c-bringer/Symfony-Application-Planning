@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% if is_granted("ROLE_INTERVENANT") %}
+
+    {% else %}
+        {% include 'dashboard/header/secretaire.html.twig' %}
+    {% endif %}
+
+    <div class="container text-center pt-5">
+        <h1>Dashboard
+            {% if is_granted("ROLE_INTERVENANT") %}
+                intervenant
+            {% else %}
+                secrétaire
+            {% endif %}
+        </h1>
+
+        <p>Vous avez été connecté avec succès {{ app.user.nom }} {{ app.user.prenom }}</p>
+    </div>
+{% endblock %}
