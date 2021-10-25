@@ -1,3 +1,51 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+new_intervenant_success:
+  path:         /dashboard/intervenants
+  controller:   Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:   'dashboard/secretaire/intervenant/listeintervenant.html.twig'
+    maxAge:     86400
+    sharedAge:  86400
+
+remove_intervenant_success:
+  path:         /dashboard/intervenants
+  controller:   Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:   'dashboard/secretaire/intervenant/listeintervenant.html.twig'
+    maxAge:     86400
+    sharedAge:  86400
+
+modify_intervenant_success:
+  path: /dashboard/intervenants
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'dashboard/secretaire/intervenant/listeintervenant.html.twig'
+    maxAge: 86400
+    sharedAge: 86400
+
+remove_matiere_success:
+  path: /dashboard/matieres
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'dashboard/secretaire/matiere/listematieres.html.twig'
+    maxAge: 86400
+    sharedAge: 86400
+
+modify_matiere_success:
+  path: /dashboard/matieres
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'dashboard/secretaire/matiere/listematieres.html.twig'
+    maxAge: 86400
+    sharedAge: 86400
+
+new_matiere_success:
+  path: /dashboard/matieres
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'dashboard/secretaire/matiere/listematieres.html.twig'
+    maxAge: 86400
+    sharedAge: 86400

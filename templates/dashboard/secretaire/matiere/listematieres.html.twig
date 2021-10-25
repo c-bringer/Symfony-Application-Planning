@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Liste des matieres{% endblock %}
 
 {% block body %}
     {% include 'dashboard/header/secretaire.html.twig' %}
@@ -11,13 +11,26 @@
         <table class="table pt-2">
             <thead>
             <tr>
+                <th scope="col">#</th>
                 <th scope="col">Libelle</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for matiere in matieres %}
                 <tr>
+                    <td>{{ matiere.id }}</td>
                     <td>{{ matiere.libelle }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="{{ path('modifier_matiere', {id: matiere.id}) }}">
+                                <button type="button" class="btn btn-success">Modifier</button>
+                            </a>
+                            <a href="{{ path('supprimer_matiere', {id: matiere.id}) }}">
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

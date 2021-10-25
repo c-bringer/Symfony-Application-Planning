@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer un intervenant{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Creer un intervenant</h1>
+
+        {{ form_start(intervenantForm, { 'attr': {'class': 'row g-3'} }) }}
+            <div class="col-md-6">
+                {{ form_row(intervenantForm.nom, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(intervenantForm.prenom, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(intervenantForm.email, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(intervenantForm.password, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-12">
+                {{ form_row(intervenantForm.specialite, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(intervenantForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+            </div>
+        {{ form_end(intervenantForm) }}
+    </div>
+{% endblock %}

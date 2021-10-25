@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une matiere{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Modifier la matiere {{ matiere.libelle }}</h1>
+
+        {{ form_start(matiereForm, { 'attr': {'class': 'row g-3'} }) }}
+        <div class="col-md-12">
+            {{ form_row(matiereForm.libelle, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(matiereForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+        </div>
+        {{ form_end(matiereForm) }}
+    </div>
+{% endblock %}

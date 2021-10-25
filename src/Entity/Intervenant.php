@@ -15,7 +15,7 @@ class Intervenant extends User
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+//    private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -32,10 +32,10 @@ class Intervenant extends User
      */
     private $specialite;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+//    public function getId(): ?int
+//    {
+//        return $this->id;
+//    }
 
     public function getNom(): ?string
     {
