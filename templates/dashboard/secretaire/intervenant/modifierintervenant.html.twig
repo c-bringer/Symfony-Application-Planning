@@ -23,8 +23,11 @@
         <div class="col-12">
             {{ form_row(intervenantForm.password, { 'attr': {'class': 'form-control'}, 'value': password }) }}
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             {{ form_row(intervenantForm.specialite, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(intervenantForm.responsableFormateur, { 'attr': {'class': 'form-check-input'} }) }}
         </div>
         <div class="col-12">
             {{ form_row(intervenantForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}

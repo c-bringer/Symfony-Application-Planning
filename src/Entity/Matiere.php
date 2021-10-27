@@ -22,6 +22,11 @@ class Matiere
      */
     private $libelle;
 
+    /**
+     * @ORM\Column(type="integer", length=2)
+     */
+    private $heure;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,5 +42,15 @@ class Matiere
         $this->libelle = $libelle;
 
         return $this;
+    }
+
+    public function getHeure()
+    {
+        return $this->heure;
+    }
+
+    public function setHeure($heure): void
+    {
+        $this->heure = $heure;
     }
 }

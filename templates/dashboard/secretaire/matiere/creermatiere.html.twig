@@ -9,8 +9,11 @@
         <h1>Creer une matiere</h1>
 
         {{ form_start(matiereForm, { 'attr': {'class': 'row g-3'} }) }}
-        <div class="col-md-12">
+        <div class="col-md-6">
             {{ form_row(matiereForm.libelle, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(matiereForm.heure, { 'attr': {'class': 'form-control'} }) }}
         </div>
         <div class="col-12">
             {{ form_row(matiereForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}

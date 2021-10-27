@@ -13,6 +13,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Libelle</th>
+                <th scope="col">Heures</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -21,6 +22,7 @@
                 <tr>
                     <td>{{ matiere.id }}</td>
                     <td>{{ matiere.libelle }}</td>
+                    <td>{{ matiere.heure }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <a href="{{ path('modifier_matiere', {id: matiere.id}) }}">

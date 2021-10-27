@@ -15,6 +15,7 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Spécialité</th>
+                    <th scope="col">Responsable formation</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -25,6 +26,13 @@
                         <td>{{ intervenant.nom }}</td>
                         <td>{{ intervenant.prenom }}</td>
                         <td>{{ intervenant.specialite }}</td>
+                        <td>
+                            {% if intervenant.responsableFormateur %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                 <a href="{{ path('modifier_intervenant', {id: intervenant.id}) }}">

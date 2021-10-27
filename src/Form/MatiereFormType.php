@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Matiere;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +16,7 @@ class MatiereFormType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class)
+            ->add('heure', NumberType::class)
             ->add('enregistrer', SubmitType::class)
         ;
     }

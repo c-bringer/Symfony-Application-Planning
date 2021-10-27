@@ -32,6 +32,11 @@ class Intervenant extends User
      */
     private $specialite;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $responsableFormateur;
+
 //    public function getId(): ?int
 //    {
 //        return $this->id;
@@ -71,5 +76,15 @@ class Intervenant extends User
         $this->specialite = $specialite;
 
         return $this;
+    }
+
+    public function getResponsableFormateur()
+    {
+        return $this->responsableFormateur;
+    }
+
+    public function setResponsableFormateur($responsableFormateur): void
+    {
+        $this->responsableFormateur = $responsableFormateur;
     }
 }
