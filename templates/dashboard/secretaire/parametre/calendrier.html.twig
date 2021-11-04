@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une matiere{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Initialiser les dates de début et de fin du calendrier scolaire</h1>
+
+        {{ form_start(calendrierForm, { 'attr': {'class': 'row g-3'} }) }}
+        <div class="col-md-6">
+            {{ form_row(calendrierForm.dateDebut, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(calendrierForm.dateFin, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(calendrierForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+        </div>
+        {{ form_end(calendrierForm) }}
+    </div>
+{% endblock %}

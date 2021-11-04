@@ -22,8 +22,8 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         $calendar->addEvent(new Event(
             'Event 1',
-            new \DateTime('Tuesday this week'),
-            new \DateTime('Wednesday this week')
+            new \DateTime('Tuesday next week'),
+            new \DateTime('Friday next week')
         ));
 
         $calendar->addEvent(new Event(

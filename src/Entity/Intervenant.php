@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IntervenantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Intervenant extends User
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $responsableFormateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Matiere::class, inversedBy="intervenants")
+     */
+    private $matieres;
+
+    public function __construct()
+    {
+        $this->matieres = new ArrayCollection();
+    }
 
 //    public function getId(): ?int
 //    {
@@ -86,5 +98,29 @@ class Intervenant extends User
     public function setResponsableFormateur($responsableFormateur): void
     {
         $this->responsableFormateur = $responsableFormateur;
+    }
+
+    /**
+     * @return Collection|Matiere[]
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matiere $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres[] = $matiere;
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(Matiere $matiere): self
+    {
+        $this->matieres->removeElement($matiere);
+
+        return $this;
     }
 }

@@ -49,3 +49,11 @@ new_matiere_success:
     template: 'dashboard/secretaire/matiere/listematieres.html.twig'
     maxAge: 86400
     sharedAge: 86400
+
+modify_calendar_success:
+  path: /dashboard/parametre/calendrier
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'dashboard/secretaire/parametre/calendrier.html.twig'
+    maxAge: 86400
+    sharedAge: 86400

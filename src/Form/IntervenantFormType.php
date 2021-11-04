@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Intervenant;
+use App\Entity\Matiere;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,6 +25,11 @@ class IntervenantFormType extends AbstractType
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('specialite', TextType::class, ['required' => false])
+            ->add('matieres', EntityType::class, [
+                'class' => Matiere::class,
+                'choice_label' => 'libelle',
+                'multiple' => true,
+                'required' => false])
             ->add('responsableFormateur', CheckboxType::class, ['required' => false])
             ->add('enregistrer', SubmitType::class)
         ;
