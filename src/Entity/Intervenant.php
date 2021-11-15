@@ -44,9 +44,15 @@ class Intervenant extends User
      */
     private $matieres;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="fkIntervenant")
+     */
+    private $disponibilites;
+
     public function __construct()
     {
         $this->matieres = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
 //    public function getId(): ?int
@@ -120,6 +126,36 @@ class Intervenant extends User
     public function removeMatiere(Matiere $matiere): self
     {
         $this->matieres->removeElement($matiere);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Disponibilite[]
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites[] = $disponibilite;
+            $disponibilite->setFkIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getFkIntervenant() === $this) {
+                $disponibilite->setFkIntervenant(null);
+            }
+        }
 
         return $this;
     }

@@ -85,4 +85,16 @@ class IntervenantController extends AbstractController
             'intervenantForm' => $form->createView()
         ]);
     }
+
+    #[Route('/dashboard/intervenant/{id}/disponibilites', name: 'disponibilites_intervenant')]
+    public function disponibilitesIntervenant($id) {
+        $intervenant = $this->getDoctrine()
+            ->getRepository(Intervenant::class)
+            ->find($id);
+
+        return $this->render('dashboard/secretaire/intervenant/disponibilitesintervenant.html.twig', [
+            'nomIntervenant' => $intervenant->getNom() . " " . $intervenant->getPrenom(),
+            'userId' => $intervenant->getId()
+        ]);
+    }
 }

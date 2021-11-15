@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Semaines et jours fériés{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Paramétrer les semaines de cours/entreprises et les jours fériés</h1>
+
+        <div id="calendar-holder"></div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/locales/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                minTime: '07:00',
+                maxTime: '19:00',
+                locale: 'fr',
+                defaultView: 'dayGridMonth',
+                editable: true,
+                weekends: false,
+                eventResizeStop: function(info) { },
+                eventClick: function(eventClickInfo) {
+                    if(confirm("Voulez-vous supprimer cette semaine ou ce jour férié ?")) {
+                        let url = `/dashboard/parametre/calendrier/semaine-et-jour-ferie/${eventClickInfo.event.id}/supprimer`
+                        let donnees = {}
+
+                        let xhr = new XMLHttpRequest
+                        xhr.open("DELETE", url)
+                        xhr.send(JSON.stringify(donnees))
+
+                        eventClickInfo.event.remove()
+                    }
+                },
+                eventDrop: function(eventDropInfo) { },
+                eventResize: function(eventResizeInfo) { },
+                eventSources: [
+                    {
+                        url: "/fc-load-events",
+                        method: "GET",
+                        extraParams: {
+                            filters: JSON.stringify({ "calendar-id": "semaine-ferie-calendar" })
+                        },
+                        failure: () => {
+                            // alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                timeZone: 'UTC',
+                selectable: true,
+                select: function(info) {
+                    var dateDebut = new Date(info.startStr);
+                    var debutStr = dateDebut.getDay()
+                        + '-' + dateDebut.getMonth()
+                        + '-' + dateDebut.getFullYear()
+                        + ' ' + dateDebut.getUTCHours()
+                        + ':' + dateDebut.getUTCMinutes()
+                    var dateFin = new Date(info.endStr);
+                    var finStr = dateFin.getDay()
+                        + '-' + dateFin.getMonth()
+                        + '-' + dateFin.getFullYear()
+                        + ' ' + dateFin.getUTCHours()
+                        + ':' + dateFin.getUTCMinutes()
+
+                    if (confirm('Voulez-vous créer une semaine ou jour férié du ' + debutStr + ' au ' + finStr + ' ?')) {
+                        calendar.addEvent(info)
+
+                        let typeSemaine = prompt("Veuillez saisir 'Cours', 'Entreprise' ou 'Férié'.")
+                        let url = `/dashboard/parametre/calendrier/semaine-et-jour-ferie/ajouter`
+                        let donnees = {
+                            "title": typeSemaine,
+                            "start": info.start,
+                            "end": info.end,
+                        }
+
+                        let xhr = new XMLHttpRequest
+                        xhr.open("POST", url)
+                        xhr.send(JSON.stringify(donnees))
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+{% endblock %}

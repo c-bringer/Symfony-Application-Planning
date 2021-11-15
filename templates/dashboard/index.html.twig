@@ -4,7 +4,7 @@
 
 {% block body %}
     {% if is_granted("ROLE_INTERVENANT") %}
-
+        {% include 'dashboard/header/intervenant.html.twig' %}
     {% else %}
         {% include 'dashboard/header/secretaire.html.twig' %}
     {% endif %}

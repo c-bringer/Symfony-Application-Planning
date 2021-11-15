@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier des disponibilités{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/intervenant.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Calendrier des disponibilités</h1>
+
+        <div id="calendar-holder"></div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/locales/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                minTime: '07:00',
+                maxTime: '19:00',
+                locale: 'fr',
+                defaultView: 'dayGridMonth',
+                editable: true,
+                weekends: false,
+                eventResizeStop: function(info) {
+                    alert('Votre disponibilité vient d\'être mise à jour');
+                },
+                eventClick: function(eventClickInfo) {
+                    if(confirm("Voulez-vous supprimer cette disponibilité ?")) {
+                        let url = `/dashboard/calendrier/disponibilites/${eventClickInfo.event.id}/supprimer`
+                        let donnees = {}
+
+                        let xhr = new XMLHttpRequest
+                        xhr.open("DELETE", url)
+                        xhr.send(JSON.stringify(donnees))
+
+                        eventClickInfo.event.remove()
+                    }
+                },
+                eventDrop: function(eventDropInfo) {
+                    let url = `/dashboard/calendrier/disponibilites/${eventDropInfo.event.id}/modifier`
+                    let donnees = {
+                        "start": eventDropInfo.event.start,
+                        "end": eventDropInfo.event.end,
+                    }
+
+                    let xhr = new XMLHttpRequest
+                    xhr.open("PUT", url)
+                    xhr.send(JSON.stringify(donnees))
+                },
+                eventResize: function(eventResizeInfo) {
+                    console.log(eventResizeInfo)
+                    let url = `/dashboard/calendrier/disponibilites/${eventResizeInfo.event.id}/modifier`
+                    let donnees = {
+                        "start": eventResizeInfo.event.start,
+                        "end": eventResizeInfo.event.end,
+                    }
+
+                    let xhr = new XMLHttpRequest
+                    xhr.open("PUT", url)
+                    xhr.send(JSON.stringify(donnees))
+                },
+                eventSources: [
+                    {
+                        url: "/fc-load-events",
+                        method: "GET",
+                        extraParams: {
+                            filters: JSON.stringify({ "calendar-id": "intervenant-disponibilites-calendar" })
+                        },
+                        failure: () => {
+                            // alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                timeZone: 'UTC',
+                selectable: true,
+                select: function(info) {
+                    var dateDebut = new Date(info.startStr);
+                    var debutStr = dateDebut.getDay()
+                        + '-' + dateDebut.getMonth()
+                        + '-' + dateDebut.getFullYear()
+                        + ' ' + dateDebut.getUTCHours()
+                        + ':' + dateDebut.getUTCMinutes()
+                    var dateFin = new Date(info.endStr);
+                    var finStr = dateFin.getDay()
+                        + '-' + dateFin.getMonth()
+                        + '-' + dateFin.getFullYear()
+                        + ' ' + dateFin.getUTCHours()
+                        + ':' + dateFin.getUTCMinutes()
+
+                    if (confirm('Voulez-vous créer une disponibilité du ' + debutStr + ' au ' + finStr + ' ?')) {
+                        calendar.addEvent(info)
+
+                        let url = `/dashboard/calendrier/disponibilites/ajouter`
+                        let donnees = {
+                            "start": info.start,
+                            "end": info.end,
+                        }
+
+                        let xhr = new XMLHttpRequest
+                        xhr.open("POST", url)
+                        xhr.send(JSON.stringify(donnees))
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+{% endblock %}

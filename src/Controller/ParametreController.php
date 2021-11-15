@@ -35,4 +35,9 @@ class ParametreController extends AbstractController
             'calendrier' => $calendrier
         ]);
     }
+
+    #[Route('/dashboard/parametre/calendrier/semaine-et-jour-ferie', name: 'parametre_calendrier_semaine_ferie')]
+    public function parameteCalendrierSemaineJourFerie() {
+        return $this->render('dashboard/secretaire/parametre/calendriersemaine.html.twig');
+    }
 }
