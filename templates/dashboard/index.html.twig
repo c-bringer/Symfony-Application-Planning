@@ -5,16 +5,20 @@
 {% block body %}
     {% if is_granted("ROLE_INTERVENANT") %}
         {% include 'dashboard/header/intervenant.html.twig' %}
-    {% else %}
+    {% elseif is_granted("ROLE_SECRETAIRE") %}
         {% include 'dashboard/header/secretaire.html.twig' %}
+    {% else %}
+        {% include 'dashboard/header/etudiant.html.twig' %}
     {% endif %}
 
     <div class="container text-center pt-5">
         <h1>Dashboard
             {% if is_granted("ROLE_INTERVENANT") %}
                 intervenant
-            {% else %}
+            {% elseif is_granted("ROLE_SECRETAIRE") %}
                 secrétaire
+            {% else %}
+                étudiant
             {% endif %}
         </h1>
 

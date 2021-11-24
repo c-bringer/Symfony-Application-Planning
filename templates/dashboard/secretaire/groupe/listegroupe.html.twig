@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des groupes{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Liste des groupes</h1>
+
+        <table class="table pt-2">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Libelle</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for groupe in groupes %}
+                <tr>
+                    <td>{{ groupe.id }}</td>
+                    <td>{{ groupe.libelle }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="{{ path('supprimer_groupe', {id: groupe.id}) }}">
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

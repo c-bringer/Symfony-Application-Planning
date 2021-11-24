@@ -32,6 +32,21 @@ class Cours
      */
     private $libelle;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Intervenant::class, inversedBy="cours")
+     */
+    private $fkIntervenant;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Groupe::class, inversedBy="cours")
+     */
+    private $fkGroupe;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Matiere::class, inversedBy="cours")
+     */
+    private $fkMatiere;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +84,42 @@ class Cours
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getFkIntervenant(): ?Intervenant
+    {
+        return $this->fkIntervenant;
+    }
+
+    public function setFkIntervenant(?Intervenant $fkIntervenant): self
+    {
+        $this->fkIntervenant = $fkIntervenant;
+
+        return $this;
+    }
+
+    public function getFkGroupe(): ?Groupe
+    {
+        return $this->fkGroupe;
+    }
+
+    public function setFkGroupe(?Groupe $fkGroupe): self
+    {
+        $this->fkGroupe = $fkGroupe;
+
+        return $this;
+    }
+
+    public function getFkMatiere(): ?Matiere
+    {
+        return $this->fkMatiere;
+    }
+
+    public function setFkMatiere(?Matiere $fkMatiere): self
+    {
+        $this->fkMatiere = $fkMatiere;
 
         return $this;
     }

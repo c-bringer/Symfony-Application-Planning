@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity()
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"intervenant" = "Intervenant", "secretaire" = "Secretaire"})
+ * @ORM\DiscriminatorMap({"intervenant" = "Intervenant", "secretaire" = "Secretaire", "etudiant" = "Etudiant"})
  */
 abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

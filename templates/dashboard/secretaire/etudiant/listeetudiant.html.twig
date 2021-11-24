@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des étudiants{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Liste des étudiants</h1>
+
+        <table class="table pt-2">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Groupe</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for etudiant in etudiants %}
+                <tr>
+                    <td>{{ etudiant.id }}</td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.fkGroupe.libelle }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="{{ path('modifier_etudiant', {id: etudiant.id}) }}">
+                                <button type="button" class="btn btn-success">Modifier</button>
+                            </a>
+                            <a href="{{ path('supprimer_etudiant', {id: etudiant.id}) }}">
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

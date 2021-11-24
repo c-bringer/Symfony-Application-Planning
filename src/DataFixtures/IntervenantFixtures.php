@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Etudiant;
 use App\Entity\Intervenant;
 use App\Entity\Secretaire;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -36,6 +37,15 @@ class IntervenantFixtures extends Fixture
         $secretaire->setPassword($this->encoder->encodePassword($intervenant, "corentinbringer"));
         $secretaire->setRoles(array("ROLE_SECRETAIRE"));
         $manager->persist($secretaire);
+        $manager->flush();
+
+        $etudiant = new Etudiant();
+        $etudiant->setNom("Carrasset");
+        $etudiant->setPrenom("Julien");
+        $etudiant->setEmail("juliencarrasset@planning.fr");
+        $etudiant->setPassword($this->encoder->encodePassword($intervenant, "juliencarrasset"));
+        $etudiant->setRoles(array("ROLE_ETUDIANT"));
+        $manager->persist($etudiant);
         $manager->flush();
     }
 }

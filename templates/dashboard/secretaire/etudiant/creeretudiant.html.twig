@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer un étudiant{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Creer un étudiant</h1>
+
+        {{ form_start(etudiantForm, { 'attr': {'class': 'row g-3'} }) }}
+        <div class="col-md-6">
+            {{ form_row(etudiantForm.nom, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(etudiantForm.prenom, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(etudiantForm.fkGroupe, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(etudiantForm.email, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(etudiantForm.password, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(etudiantForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+        </div>
+        {{ form_end(etudiantForm) }}
+    </div>
+{% endblock %}

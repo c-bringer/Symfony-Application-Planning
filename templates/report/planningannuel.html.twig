@@ -1,0 +1,12 @@
+{% set dateTime = date(calendrier.dateDebut) %}
+<span class="day">{{ dateTime | date('d') }}</span>
+<span class="month">{{ dateTime | date('F') | slice(0, 3) }}</span>
+<span class="year">{{ dateTime | date('Y') }}</span>
+
+{% set difference = date(calendrier.dateFin).diff(date(calendrier.dateDebut)) %}
+{% set leftDays = difference.days %}
+{{ leftDays }} days
+
+<table>
+
+</table>

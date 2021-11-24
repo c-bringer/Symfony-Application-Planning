@@ -19,6 +19,14 @@ class MatiereRepository extends ServiceEntityRepository
         parent::__construct($registry, Matiere::class);
     }
 
+    public function matieresParIntervenant($id) {
+        return $this->createQueryBuilder('i')
+            ->from('App:Matiere', 'm')
+            ->where('i.matieres = m.id')
+            ->andWhere('i.id = :id')
+            ->setParameter('id', $id);
+    }
+
     // /**
     //  * @return Matiere[] Returns an array of Matiere objects
     //  */

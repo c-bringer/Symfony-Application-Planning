@@ -49,10 +49,16 @@ class Intervenant extends User
      */
     private $disponibilites;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="fkIntervenant")
+     */
+    private $cours;
+
     public function __construct()
     {
         $this->matieres = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
 //    public function getId(): ?int
@@ -154,6 +160,36 @@ class Intervenant extends User
             // set the owning side to null (unless already changed)
             if ($disponibilite->getFkIntervenant() === $this) {
                 $disponibilite->setFkIntervenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCours(): Collection
+    {
+        return $this->cours;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->cours->contains($cour)) {
+            $this->cours[] = $cour;
+            $cour->setFkIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            // set the owning side to null (unless already changed)
+            if ($cour->getFkIntervenant() === $this) {
+                $cour->setFkIntervenant(null);
             }
         }
 

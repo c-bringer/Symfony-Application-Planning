@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer un groupe{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Creer un groupe</h1>
+
+        {{ form_start(groupeForm, { 'attr': {'class': 'row g-3'} }) }}
+        <div class="col-md-12">
+            {{ form_row(groupeForm.libelle, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(groupeForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+        </div>
+        {{ form_end(groupeForm) }}
+    </div>
+{% endblock %}

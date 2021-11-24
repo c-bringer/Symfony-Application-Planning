@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\MatiereRepository;
+use App\Repository\GroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MatiereRepository::class)
+ * @ORM\Entity(repositoryClass=GroupeRepository::class)
  */
-class Matiere
+class Groupe
 {
     /**
      * @ORM\Id
@@ -20,28 +20,23 @@ class Matiere
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $libelle;
 
     /**
-     * @ORM\Column(type="integer", length=2)
+     * @ORM\OneToMany(targetEntity=Etudiant::class, mappedBy="fkGroupe")
      */
-    private $heure;
+    private $etudiants;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Intervenant::class, mappedBy="matieres")
-     */
-    private $intervenants;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="fkMatiere")
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="fkGroupe")
      */
     private $cours;
 
     public function __construct()
     {
-        $this->intervenants = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
         $this->cours = new ArrayCollection();
     }
 
@@ -62,38 +57,31 @@ class Matiere
         return $this;
     }
 
-    public function getHeure()
-    {
-        return $this->heure;
-    }
-
-    public function setHeure($heure): void
-    {
-        $this->heure = $heure;
-    }
-
     /**
-     * @return Collection|Intervenant[]
+     * @return Collection|Etudiant[]
      */
-    public function getIntervenants(): Collection
+    public function getEtudiants(): Collection
     {
-        return $this->intervenants;
+        return $this->etudiants;
     }
 
-    public function addIntervenant(Intervenant $intervenant): self
+    public function addEtudiant(Etudiant $etudiant): self
     {
-        if (!$this->intervenants->contains($intervenant)) {
-            $this->intervenants[] = $intervenant;
-            $intervenant->addMatiere($this);
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setFkGroupe($this);
         }
 
         return $this;
     }
 
-    public function removeIntervenant(Intervenant $intervenant): self
+    public function removeEtudiant(Etudiant $etudiant): self
     {
-        if ($this->intervenants->removeElement($intervenant)) {
-            $intervenant->removeMatiere($this);
+        if ($this->etudiants->removeElement($etudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getFkGroupe() === $this) {
+                $etudiant->setFkGroupe(null);
+            }
         }
 
         return $this;
@@ -111,7 +99,7 @@ class Matiere
     {
         if (!$this->cours->contains($cour)) {
             $this->cours[] = $cour;
-            $cour->setFkMatiere($this);
+            $cour->setFkGroupe($this);
         }
 
         return $this;
@@ -121,8 +109,8 @@ class Matiere
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getFkMatiere() === $this) {
-                $cour->setFkMatiere(null);
+            if ($cour->getFkGroupe() === $this) {
+                $cour->setFkGroupe(null);
             }
         }
 

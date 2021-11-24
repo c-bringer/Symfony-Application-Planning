@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer un cours{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Creer un cours</h1>
+
+        {{ form_start(coursForm, { 'attr': {'class': 'row g-3'} }) }}
+        <div class="col-md-6">
+            {{ form_row(coursForm.commenceA, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(coursForm.finiA, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(coursForm.libelle, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(coursForm.fkIntervenant, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(coursForm.fkMatiere, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(coursForm.fkGroupe, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(coursForm.enregistrer, { 'attr': {'class': 'btn btn-primary'} }) }}
+        </div>
+        {{ form_end(coursForm) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            var $intervenant = $('#cours_form_fkIntervenant')
+            var $token = $('#post_token')
+
+            $intervenant.change(function() {
+                var $form = $(this).closest('form')
+                var data = {}
+
+                data[$token.attr('name')] = $token.val()
+                data[$intervenant.attr('name')] = $intervenant.val()
+
+                $.post($form.attr('action'), data).then(function(response) {
+                    $("#cours_form_fkMatiere").replaceWith(
+                        $(response).find("#cours_form_fkMatiere")
+                    )
+                })
+            })
+        });
+    </script>
+{% endblock %}
