@@ -18,11 +18,11 @@ class CoursController extends AbstractController
         $cours = new Cours();
         $form = $this->createForm(CoursFormType::class, $cours);
 
-        if($request->isXmlHttpRequest()) {
-            return $this->render('dashboard/secretaire/cours/creercours.html.twig', [
-                'coursForm' => $form->createView()
-            ]);
-        }
+//        if($request->isXmlHttpRequest()) {
+//            return $this->render('dashboard/secretaire/cours/creercours.html.twig', [
+//                'coursForm' => $form->createView()
+//            ]);
+//        }
 
         $form->handleRequest($request);
 

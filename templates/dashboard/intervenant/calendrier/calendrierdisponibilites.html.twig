@@ -60,6 +60,13 @@
 
                     let xhr = new XMLHttpRequest
                     xhr.open("PUT", url)
+                    xhr.onload = function () {
+                        if (xhr.readyState === xhr.DONE) {
+                            if (xhr.status === 401) {
+                                alert(xhr.responseText)
+                            }
+                        }
+                    };
                     xhr.send(JSON.stringify(donnees))
                 },
                 eventResize: function(eventResizeInfo) {
@@ -72,6 +79,13 @@
 
                     let xhr = new XMLHttpRequest
                     xhr.open("PUT", url)
+                    xhr.onload = function () {
+                        if (xhr.readyState === xhr.DONE) {
+                            if (xhr.status === 401) {
+                                alert(xhr.responseText)
+                            }
+                        }
+                    };
                     xhr.send(JSON.stringify(donnees))
                 },
                 eventSources: [
@@ -119,6 +133,13 @@
 
                         let xhr = new XMLHttpRequest
                         xhr.open("POST", url)
+                        xhr.onload = function () {
+                            if (xhr.readyState === xhr.DONE) {
+                                if (xhr.status === 401) {
+                                    alert(xhr.responseText)
+                                }
+                            }
+                        };
                         xhr.send(JSON.stringify(donnees))
                     }
                 }

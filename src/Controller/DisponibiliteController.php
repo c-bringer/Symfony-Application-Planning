@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Disponibilite;
 use App\Entity\Intervenant;
+use App\Entity\Semaine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,20 @@ class DisponibiliteController extends AbstractController
             $intervenant = $this->getDoctrine()
                 ->getRepository(Intervenant::class)
                 ->find($this->security->getUser()->getId());
+            $semaines = $this->getDoctrine()
+                ->getRepository(Semaine::class)
+                ->findAll();
+
+            foreach($semaines as $semaine) {
+                if($semaine->getDateDebut() < new \DateTime($donnees->start) && $semaine->getDateFin() > new \DateTime($donnees->start)) {
+                    if($semaine->getLibelle() == "Entreprise") {
+                        return new Response('Impossible d\'ajouter une disponibilité durant une semaine d\'entreprise', 401);
+                    } else if($semaine->getLibelle() == "Férié") {
+                        return new Response('Impossible d\'ajouter une disponibilité durant un jour férié', 401);
+                    }
+                }
+            }
+
             $disponibilite = new Disponibilite();
 
             $disponibilite->setDateDebut(new \DateTime($donnees->start));
@@ -52,6 +67,19 @@ class DisponibiliteController extends AbstractController
             $intervenant = $this->getDoctrine()
                 ->getRepository(Intervenant::class)
                 ->find($this->security->getUser()->getId());
+            $semaines = $this->getDoctrine()
+                ->getRepository(Semaine::class)
+                ->findAll();
+
+            foreach($semaines as $semaine) {
+                if($semaine->getDateDebut() < new \DateTime($donnees->start) && $semaine->getDateFin() > new \DateTime($donnees->start)) {
+                    if($semaine->getLibelle() == "Entreprise") {
+                        return new Response('Impossible d\'ajouter une disponibilité durant une semaine d\'entreprise', 401);
+                    } else if($semaine->getLibelle() == "Férié") {
+                        return new Response('Impossible d\'ajouter une disponibilité durant un jour férié', 401);
+                    }
+                }
+            }
 
             if(!$disponibilite) {
                 $disponibilite = new Disponibilite();
