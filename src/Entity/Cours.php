@@ -47,6 +47,11 @@ class Cours
      */
     private $fkMatiere;
 
+    public function __construct() {
+        $this->commenceA = new \DateTime();
+        $this->finiA = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

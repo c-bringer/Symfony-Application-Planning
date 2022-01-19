@@ -29,7 +29,7 @@ class CoursController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formCours = $form->getData();
 
-            dd($form->getData());
+            dump($form->getData());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($formCours);

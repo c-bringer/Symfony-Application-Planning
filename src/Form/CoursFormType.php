@@ -36,6 +36,15 @@ class CoursFormType extends AbstractType
                 'mapped' => false,
                 'placeholder' => 'Sélectionner un intervenant',
                 'required' => true])
+            ->add('fkMatiere', EntityType::class, [
+                    'class' => Matiere::class,
+                    'placeholder' => 'Sélectionner une matière',
+                    'multiple' => false,
+                    'required' => true,
+                'choice_label' => function ($matiere) {
+                    return $matiere->getLibelle();
+                },
+                ])
             ->add('fkGroupe', EntityType::class, [
                 'class' => Groupe::class,
                 'choice_label' => 'libelle',
@@ -43,49 +52,51 @@ class CoursFormType extends AbstractType
                 'required' => false])
             ->add('enregistrer', SubmitType::class);
 
-        $builder->get('fkIntervenant')->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $event->getData();
+//        $builder->get('fkIntervenant')->addEventListener(
+//            FormEvents::PRE_SUBMIT,
+//            function (FormEvent $event) {
+//                $form = $event->getForm();
+//                $data = $event->getData();
+//
+//                $form->add('fkMatiere', EntityType::class, [
+//                    'class' => Matiere::class,
+//                    'placeholder' => 'Sélectionner une matière',
+//                    'multiple' => false,
+//                    'required' => true,
+//                    'choices' => $data->getMatieres()
+//                ]);
+//            }
+//        );
 
-                $form->add('fkMatiere', EntityType::class, [
-                    'class' => Matiere::class,
-                    'placeholder' => 'Sélectionner une matière',
-                    'multiple' => false,
-                    'required' => true,
-                    'choices' => $data->getMatieres()
-                ]);
-            }
-        );
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
-            $data = $event->getData();
-            $matieres = $data->getFkMatiere();
-
-            if ($matieres) {
-                $form->get('fkIntervenant')->setData($matieres->getLibelle());
-
-                $form->add('fkMatiere', EntityType::class, [
-                    'class' => Matiere::class,
-                    'placeholder' => 'Sélectionner une matière',
-                    'choice_label' => 'libelle',
-                    'multiple' => false,
-                    'required' => true,
-                    'choices' => $matieres->getLibelle()
-                ]);
-            } else {
-                $form->add('fkMatiere', EntityType::class, [
-                    'class' => Matiere::class,
-                    'placeholder' => 'Sélectionner une matière',
-                    'choice_label' => 'libelle',
-                    'multiple' => false,
-                    'required' => false
-                ]);
-            }
-        }
-        );
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+//            $form = $event->getForm();
+//            $data = $event->getData();
+//            $matieres = $data->getFkMatiere();
+//
+//            dump($data);
+//
+//            if ($matieres) {
+//                $form->get('fkIntervenant')->setData($matieres->getLibelle());
+//
+//                $form->add('fkMatiere', EntityType::class, [
+//                    'class' => Matiere::class,
+//                    'placeholder' => 'Sélectionner une matière',
+//                    'choice_label' => 'libelle',
+//                    'multiple' => false,
+//                    'required' => true,
+//                    'choices' => $matieres->getLibelle()
+//                ]);
+//            } else {
+//                $form->add('fkMatiere', EntityType::class, [
+//                    'class' => Matiere::class,
+//                    'placeholder' => 'Sélectionner une matière',
+//                    'choice_label' => 'libelle',
+//                    'multiple' => false,
+//                    'required' => false
+//                ]);
+//            }
+//        }
+//        );
 
 
 //        $formModifier = function (FormInterface $form, Intervenant $intervenant = null) {

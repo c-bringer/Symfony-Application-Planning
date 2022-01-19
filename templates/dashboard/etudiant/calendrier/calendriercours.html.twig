@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier{% endblock %}
+{% block title %}Calendrier des cours{% endblock %}
 
 {% block body %}
-    {% include 'dashboard/header/secretaire.html.twig' %}
+    {% include 'dashboard/header/etudiant.html.twig' %}
 
     <div class="container text-center pt-5">
-        <h1>Calendrier</h1>
-        <a href="{{ path('creer_cours') }}">
-            <button type="button" class="btn btn-success">Ajouter un cours</button>
-        </a>
+        <h1>Calendrier des cours</h1>
 
         <div id="calendar-holder"></div>
     </div>
@@ -35,16 +32,15 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 minTime: '07:00',
                 maxTime: '19:00',
-                weekends: false,
                 locale: 'fr',
                 defaultView: 'dayGridMonth',
-                editable: true,
+                weekends: false,
                 eventSources: [
                     {
                         url: "/fc-load-events",
-                        method: "POST",
+                        method: "GET",
                         extraParams: {
-                            filters: JSON.stringify({ "calendar-id": "calendrier-general" })
+                            filters: JSON.stringify({ "calendar-id": "etudiant-calendar" })
                         },
                         failure: () => {
                             // alert("There was an error while fetching FullCalendar!");
@@ -59,6 +55,7 @@
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
                 timeZone: 'UTC',
             });
+
             calendar.render();
         });
     </script>

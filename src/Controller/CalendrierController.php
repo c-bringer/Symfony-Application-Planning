@@ -17,4 +17,9 @@ class CalendrierController extends AbstractController
     public function calendar(): Response {
         return $this->render('dashboard/secretaire/calendrier/calendrier.html.twig');
     }
+
+    #[Route('/dashboard/calendrier-etudiant', name: 'calendrier-etudiant')]
+    public function calendrierEtudiant(): Response {
+        return $this->render('dashboard/etudiant/calendrier/calendriercours.html.twig');
+    }
 }
