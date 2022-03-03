@@ -61,10 +61,12 @@ class CalendarSubscriber implements EventSubscriberInterface
     public function calendrierEtudiant(CalendarEvent $calendar, \DateTimeInterface $start, \DateTimeInterface $end, array $filters) {
         $coursList = $this->coursRepository
             ->createQueryBuilder('cours')
-            ->where('cours.commenceA BETWEEN :start and :end OR cours.finiA BETWEEN :start and :end AND cours.fkGroupe IS NULL OR cours.fkGroupe = :groupe_id')
+            ->where('cours.fkGroupe is null')
+            ->orWhere('cours.fkGroupe = :groupe_id')
+            ->andWhere('cours.commenceA BETWEEN :start and :end OR cours.finiA BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
-            ->setParameter('groupe_id', $this->security->getUser()->getFkGroupe())
+            ->setParameter('groupe_id', $this->security->getUser()->getFkGroupe()->getId())
             ->getQuery()
             ->getResult();
 
