@@ -94,14 +94,14 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         foreach ($disponibilites as $disponibilite) {
             $disponibiliteEvent = new Event(
-                "Disponibilité",
+                "Disponibilité de " . $disponibilite->getFkIntervenant()->getNom() . " " . $disponibilite->getFkIntervenant()->getPrenom(),
                 $disponibilite->getDateDebut(),
                 $disponibilite->getDateFin()
             );
 
-//            $disponibiliteEvent->setOptions([
-//                'id' => $disponibilite->getId()
-//            ]);
+            $disponibiliteEvent->setOptions([
+                'id' => $disponibilite->getId()
+            ]);
 
             $calendar->addEvent($disponibiliteEvent);
         }

@@ -39,6 +39,11 @@
                 locale: 'fr',
                 defaultView: 'dayGridMonth',
                 editable: true,
+                eventClick: function(eventClickInfo) {
+                    if(confirm("Voulez-vous créer un cours depuis cette disponibilité ?")) {
+                        document.location.href = "/dashboard/cours/creer/disponibilite/" + eventClickInfo.event.id;
+                    }
+                },
                 eventSources: [
                     {
                         url: "/fc-load-events",

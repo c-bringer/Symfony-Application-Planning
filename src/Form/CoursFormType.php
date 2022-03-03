@@ -6,6 +6,7 @@ use App\Entity\Cours;
 use App\Entity\Groupe;
 use App\Entity\Intervenant;
 use App\Entity\Matiere;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,7 +34,6 @@ class CoursFormType extends AbstractType
                     return $intervernant->getNom() . ' ' . $intervernant->getPrenom();
                 },
                 'multiple' => false,
-                'mapped' => false,
                 'placeholder' => 'Sélectionner un intervenant',
                 'required' => true])
             ->add('fkMatiere', EntityType::class, [
@@ -41,9 +41,9 @@ class CoursFormType extends AbstractType
                     'placeholder' => 'Sélectionner une matière',
                     'multiple' => false,
                     'required' => true,
-                'choice_label' => function ($matiere) {
-                    return $matiere->getLibelle();
-                },
+                    'choice_label' => function ($matiere) {
+                        return $matiere->getLibelle();
+                    },
                 ])
             ->add('fkGroupe', EntityType::class, [
                 'class' => Groupe::class,

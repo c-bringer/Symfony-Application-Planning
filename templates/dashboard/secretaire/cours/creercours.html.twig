@@ -9,6 +9,11 @@
         <h1>Creer un cours</h1>
 
         {{ form_start(coursForm, { 'attr': {'class': 'row g-3'} }) }}
+
+        {% if erreur != '' %}
+            <p class="color: red;">{{ erreur }}</p>
+        {% endif %}
+
         <div class="col-md-6">
             {{ form_row(coursForm.commenceA, { 'attr': {'class': 'form-control'} }) }}
         </div>
