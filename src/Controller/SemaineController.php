@@ -17,18 +17,22 @@ class SemaineController extends AbstractController
         if(isset($donnees->title) && !empty($donnees->title)
             && isset($donnees->start) && !empty($donnees->start)
             && isset($donnees->end) && !empty($donnees->end)) {
-            $code = 200;
-            $semaine = new Semaine();
+            if($donnees->title == "Cours" || $donnees->title == "Entreprise" || $donnees->title == "Férié") {
+                $code = 200;
+                $semaine = new Semaine();
 
-            $semaine->setLibelle($donnees->title);
-            $semaine->setDateDebut(new \DateTime($donnees->start));
-            $semaine->setDateFin(new \DateTime($donnees->end));
+                $semaine->setLibelle($donnees->title);
+                $semaine->setDateDebut(new \DateTime($donnees->start));
+                $semaine->setDateFin(new \DateTime($donnees->end));
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semaine);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($semaine);
+                $em->flush();
 
-            return new Response('Ok', $code);
+                return new Response('Ok', $code);
+            } else {
+                return new Response('Veuillez saisir une valeur correcte', 404);
+            }
         } else {
             return new Response('Données incomplètes', 404);
         }

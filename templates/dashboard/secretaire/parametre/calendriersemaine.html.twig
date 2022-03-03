@@ -86,19 +86,23 @@
                         + ':' + dateFin.getUTCMinutes()
 
                     if (confirm('Voulez-vous créer une semaine ou jour férié du ' + debutStr + ' au ' + finStr + ' ?')) {
-                        calendar.addEvent(info)
-
                         let typeSemaine = prompt("Veuillez saisir 'Cours', 'Entreprise' ou 'Férié'.")
-                        let url = `/dashboard/parametre/calendrier/semaine-et-jour-ferie/ajouter`
-                        let donnees = {
-                            "title": typeSemaine,
-                            "start": info.start,
-                            "end": info.end,
-                        }
+                        if(typeSemaine == "Cours" || typeSemaine == "Entreprise" || typeSemaine == "Férié") {
+                            calendar.addEvent(info)
 
-                        let xhr = new XMLHttpRequest
-                        xhr.open("POST", url)
-                        xhr.send(JSON.stringify(donnees))
+                            let url = `/dashboard/parametre/calendrier/semaine-et-jour-ferie/ajouter`
+                            let donnees = {
+                                "title": typeSemaine,
+                                "start": info.start,
+                                "end": info.end,
+                            }
+
+                            let xhr = new XMLHttpRequest
+                            xhr.open("POST", url)
+                            xhr.send(JSON.stringify(donnees))
+                        } else {
+                            alert("Veuillez saisir une valeur correcte")
+                        }
                     }
                 }
             });

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des intervenants{% endblock %}
+
+{% block body %}
+    {% include 'dashboard/header/secretaire.html.twig' %}
+
+    <div class="container text-center pt-5">
+        <h1>Récapitulatif de l'intervenant</h1>
+
+        <h2>Récapitulatif des disponibilités</h2>
+
+        <table class="table pt-2">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Début</th>
+                <th scope="col">Fin</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for disponibilite in disponibilites %}
+                <tr>
+                    <td>{{ disponibilite.id }}</td>
+                    <td>{{ disponibilite.dateDebut | date('d-m-Y H:m:s') }}</td>
+                    <td>{{ disponibilite.dateFin | date('d-m-Y H:m:s') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Récapitulatif des cours</h2>
+
+        <table class="table pt-2">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Début</th>
+                <th scope="col">Fin</th>
+                <th scope="col">Libelle</th>
+                <th scope="col">Matiere</th>
+                <th scope="col">Groupe</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cour in cours %}
+                <tr>
+                    <td>{{ cour.id }}</td>
+                    <td>{{ cour.commenceA | date('d-m-Y H:m:s') }}</td>
+                    <td>{{ cour.finiA | date('d-m-Y H:m:s') }}</td>
+                    <td>{{ cour.libelle }}</td>
+                    <td>{{ cour.fkMatiere.libelle }}</td>
+                    {% if cour.fkGroupe != null %}
+                        <td>{{ cour.fkGroupe.libelle }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

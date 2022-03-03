@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Cours;
+use App\Entity\Disponibilite;
 use App\Entity\Intervenant;
 use App\Form\IntervenantFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -95,6 +97,37 @@ class IntervenantController extends AbstractController
         return $this->render('dashboard/secretaire/intervenant/disponibilitesintervenant.html.twig', [
             'nomIntervenant' => $intervenant->getNom() . " " . $intervenant->getPrenom(),
             'userId' => $intervenant->getId()
+        ]);
+    }
+
+    #[Route('/dashboard/intervenant/{id}/recapitulatif', name: 'recapitulatif_intervenant')]
+    public function recapitulatifIntervenant($id) {
+        $disponibilites = $this->getDoctrine()
+            ->getRepository(Disponibilite::class)
+            ->createQueryBuilder('disponibilite')
+//            ->where('disponibilite.dateDebut BETWEEN :start and :end OR disponibilite.dateFin BETWEEN :start and :end')
+            ->join('disponibilite.fkIntervenant', 'user')
+            ->addSelect('user')
+            ->andWhere('user.id = :user_id')
+//            ->setParameter('start', $start->format('Y-m-d H:i:s'))
+//            ->setParameter('end', $end->format('Y-m-d H:i:s'))
+            ->setParameter('user_id', $id)
+            ->getQuery()
+            ->getResult();
+
+        $cours = $this->getDoctrine()
+            ->getRepository(Cours::class)
+            ->createQueryBuilder('cours')
+            ->join('cours.fkIntervenant', 'user')
+            ->addSelect('user')
+            ->andWhere('user.id = :user_id')
+            ->setParameter('user_id', $id)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('dashboard/secretaire/intervenant/recapitulatifintervenant.html.twig', [
+            'disponibilites' => $disponibilites,
+            'cours' => $cours
         ]);
     }
 }

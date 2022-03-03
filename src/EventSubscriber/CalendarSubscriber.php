@@ -70,12 +70,43 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         foreach ($coursList as $cours) {
             $coursEvent = new Event(
-                $cours->getLibelle(),
+                $cours->getLibelle() .
+                ".\n Cours avec " . $cours->getFkIntervenant()->getNom() . " " . $cours->getFkIntervenant()->getPrenom() .
+                ".\n Matiere " . $cours->getFkMatiere()->getLibelle(),
                 $cours->getCommenceA(),
                 $cours->getFiniA()
             );
 
             $calendar->addEvent($coursEvent);
+        }
+
+        $semaines = $this->semaineRepository
+            ->createQueryBuilder('semaine')
+            ->where('semaine.dateDebut BETWEEN :start and :end OR semaine.dateFin BETWEEN :start and :end')
+            ->setParameter('start', $start->format('Y-m-d H:i:s'))
+            ->setParameter('end', $end->format('Y-m-d H:i:s'))
+            ->getQuery()
+            ->getResult();
+
+        foreach ($semaines as $semaine) {
+            $semaineEvent = new Event(
+                $semaine->getLibelle(),
+                $semaine->getDateDebut(),
+                $semaine->getDateFin()
+            );
+
+            $semaineEvent->setOptions([
+                'id' => $semaine->getId(),
+                'allDay' => true,
+            ]);
+
+            if($semaine->getLibelle() == "Entreprise") {
+                $semaineEvent->addOption('backgroundColor', 'orange');
+            } else if($semaine->getLibelle() == "Férié") {
+                $semaineEvent->addOption('backgroundColor', 'red');
+            }
+
+            $calendar->addEvent($semaineEvent);
         }
     }
 
