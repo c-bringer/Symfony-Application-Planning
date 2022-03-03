@@ -40,8 +40,10 @@
                 defaultView: 'dayGridMonth',
                 editable: true,
                 eventClick: function(eventClickInfo) {
-                    if(confirm("Voulez-vous créer un cours depuis cette disponibilité ?")) {
-                        document.location.href = "/dashboard/cours/creer/disponibilite/" + eventClickInfo.event.id;
+                    if(eventClickInfo.event.title.includes("Disponibilité")) {
+                        if(confirm("Voulez-vous créer un cours depuis cette disponibilité ?")) {
+                            document.location.href = "/dashboard/cours/creer/disponibilite/" + eventClickInfo.event.id;
+                        }
                     }
                 },
                 eventSources: [
