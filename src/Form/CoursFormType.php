@@ -26,7 +26,7 @@ class CoursFormType extends AbstractType
             ->add('commenceA', DateTimeType::class)
             ->add('finiA', DateTimeType::class)
             ->add('libelle', TextType::class, [
-                'required' => false
+                'required' => true
             ])
             ->add('fkIntervenant', EntityType::class, [
                 'class' => Intervenant::class,

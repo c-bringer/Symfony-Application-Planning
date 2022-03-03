@@ -68,6 +68,7 @@ class CoursController extends AbstractController
             }
 
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($disponibilite);
             $entityManager->persist($formCours);
             $entityManager->flush();
             return $this->redirectToRoute('new_cours_success');
@@ -81,7 +82,7 @@ class CoursController extends AbstractController
         $matiere = $formCours->getFkMatiere();
 
         $matieresIntervenant = $intervenant->getMatieres();
-        
+
         foreach($matieresIntervenant as $item) {
             if($item == $matiere) {
                 return false;

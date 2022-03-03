@@ -145,21 +145,12 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         foreach ($coursList as $cours) {
             $coursEvent = new Event(
-                $cours->getLibelle(),
+                $cours->getLibelle() .
+                ".\n Cours avec " . $cours->getFkIntervenant()->getNom() . " " . $cours->getFkIntervenant()->getPrenom() .
+                ".\n Matiere " . $cours->getFkMatiere()->getLibelle(),
                 $cours->getCommenceA(),
                 $cours->getFiniA()
             );
-
-//            $semaineEvent->setOptions([
-//                'id' => $semaine->getId(),
-//                'allDay' => true,
-//            ]);
-//
-//            if($semaine->getLibelle() == "Entreprise") {
-//                $semaineEvent->addOption('backgroundColor', 'orange');
-//            } else if($semaine->getLibelle() == "Férié") {
-//                $semaineEvent->addOption('backgroundColor', 'red');
-//            }
 
             $calendar->addEvent($coursEvent);
         }
